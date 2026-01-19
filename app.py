@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error
 import warnings
+import os
 warnings.filterwarnings("ignore")
 
 # ======================================================
@@ -96,7 +97,10 @@ hr {
 # ======================================================
 @st.cache_data
 def load_data():
-    df = pd.read_csv("ispu_dki_all1.csv", sep=";")
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(base_dir, "ispu_dki_all1.csv")
+
+    df = pd.read_csv(file_path, sep=";")
     df["tanggal"] = pd.to_datetime(df["tanggal"], errors="coerce")
 
     if "categori" in df.columns:
@@ -256,3 +260,4 @@ else:
     ax3.legend()
     ax3.grid(alpha=0.3)
     st.pyplot(fig3, use_container_width=True)
+
